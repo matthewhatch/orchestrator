@@ -18,7 +18,7 @@
             }
         },
         {
-            "sourche": "salesforce",
+            "source": "salesforce",
             "mapping": {
                 "customer_id": "Customer ID",
                 "customer_name": "Customer Name",

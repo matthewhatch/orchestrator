@@ -14,14 +14,14 @@ def main_flow():
     deployment_manifest = get_manifest()
 
     if not deployment_manifest:
-        raise ValueError("Deployment manifest is empty or not found.")
-    logger.info("Deployment Manifest Loaded:")
+        raise ValueError("Deployment manifest is empty or not found")
+    logger.info("Deployment Manifest Loaded")
     
     # Extract customers from MANIFEST
     customers = deployment_manifest.get("customers", [])
     del deployment_manifest["customers"]
 
-    logger.info("Extracting versions from the manifest...")
+    logger.info("Extracting versions from the manifest")
 
     for key in deployment_manifest:
         version, previous_version = get_versions(key)

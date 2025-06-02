@@ -46,11 +46,16 @@ def deploy_snowflake(version, previous):
     logger.info(f"Deployment of Snowflake Schema Version: {version} Complete!")
 
 @task(name="deploy snowflake data")
+def deploy_snowflake_data(version, previous):
+    logger = get_run_logger()
+    logger.info(f"Deployment of Snowflake Data Version: {version} Complete!")
+
+@task(name="deploy pipeline")    
 def deploy_prefect(version, previous):
     logger = get_run_logger()
     logger.info(f"Deployment of Prefect Version: {version} Complete!")
 
-
+@task(name="deploy salesforce connector")
 def deploy_salesforce_connector(version, previous):
     logger = get_run_logger()
     logger.info(f"Deployment of Sales Force Connector Version: {version} Complete!")

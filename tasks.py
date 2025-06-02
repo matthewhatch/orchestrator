@@ -13,6 +13,7 @@ S3_BUCKET = os.getenv('AWS_S3_BUCKET_NAME', 'default-bucket-name')  # Replace wi
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
 
+@task(name="get deployment manifest")
 def get_manifest():
     logger = get_run_logger()
 
@@ -25,6 +26,7 @@ def get_manifest():
 
     return deployment_manifest
 
+@task(name="get module versions")
 def get_versions(module_name):
     """
     Get the version of a specific module from the manifest.
@@ -38,10 +40,12 @@ def get_versions(module_name):
     else:
         return f"{module_name} not found in manifest"
 
+@task(name="deploy snowflake schema")
 def deploy_snowflake(version, previous):
     logger = get_run_logger()
     logger.info(f"Deployment of Snowflake Schema Version: {version} Complete!")
 
+@task(name="deploy snowflake data")
 def deploy_prefect(version, previous):
     logger = get_run_logger()
     logger.info(f"Deployment of Prefect Version: {version} Complete!")

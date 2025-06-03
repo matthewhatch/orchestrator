@@ -1,6 +1,7 @@
 from prefect import flow, task
 from prefect.logging import get_run_logger
 from tasks import get_manifest, get_versions, deploy_snowflake, deploy_prefect, deploy_salesforce_connector, publish_customer_configuration
+from validators.customer_config import validate_customer_configurations
 
 @flow
 def main_flow():
@@ -46,4 +47,8 @@ def deploy(module, version, previous_version):
         deploy_prefect(version, previous_version)
 
 if __name__ == "__main__":
+    try:
+        validate_customer_configurations()
+    except Exception as e:
+        raise
     main_flow()

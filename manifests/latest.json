@@ -7,22 +7,22 @@
 		"version": "1.1.1",
 		"previous": "1.1.0"
 	},
-    "salesforce_connector": {
-        "version": "2.1.0",
-        "previous": "2.0.0"
-    },
+	"salesforce_connector": {
+		"version": "2.1.0",
+		"previous": "2.0.0"
+	},
 	"customers": [
-			{
-				"name": "patriots",
-				"id": "345345",
-				"version": "1.1.1",
-				"previous": null
-			},
-			{
-				"name": "nascar",
-				"id": "123123",
-				"version": "1.1.0",
-				"previous": null
-			}
+		{
+			"name": "patriots",
+			"id": "345345",
+			"version": "1.1.1",
+			"previous": null
+		},
+		{
+			"name": "nascar",
+			"id": "123123",
+			"version": "1.1.0",
+			"previous": null
+		}
 	]
 }

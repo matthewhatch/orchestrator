@@ -24,6 +24,45 @@ def load_customer_configuration(file_path: str):
         logger.error(f"Failed to load configuration from {file_path}: {e}")
         raise
 
+@task(name="validate configuration")
+def validate_configuration(config: dict):
+    logger = get_run_logger()
+    
+    df = pd.DataFrame([config])
+
+    # Validate 'name' column exists and is not null
+    if "name" not in df.columns:
+        logger.error(f"Validation failed for config: {config.get('name')} (missing 'name')")
+        raise ValueError(f"Validation failed for config: {config.get('name')}")
+    if df["name"].isnull().any():
+        logger.error(f"Validation failed for config: {config.get('name')} (null 'name')")
+        raise ValueError(f"Validation failed for config: {config.get('name')}")
+
+    # Validate 'email' column exists and matches regex
+    if "version" not in df.columns:
+        logger.error(f"Validation failed for config: {config.get('name')} (missing 'version')")
+        raise ValueError(f"Validation failed for config: {config.get('name')}")
+    
+    if df["version"].isnull().any():
+        logger.error(f"Validation failed for config: {config.get('name')} (missing 'version')")
+        raise ValueError(f"Validation failed for config: {config.get('name')}")
+    
+    if "created_at" not in df.columns:
+        logger.error(f"Validation failed for config: {config.get('name')} (missing 'created_at')")
+        raise ValueError(f"Validation failed for config: {config.get('name')}")
+
+    if df["created_at"].isnull().any():
+        logger.error(f"Validation failed for config: {config.get('name')} (missing 'created_at')")
+        raise ValueError(f"Validation failed for config: {config.get('name')}")
+
+    if "updated_at" not in df.columns:
+        logger.error(f"Validation failed for config: {config.get('name')} (missing 'updated_at')")
+        raise ValueError(f"Validation failed for config: {config.get('name')}")
+
+    if df["updated_at"].isnull().any():
+        logger.error(f"Validation failed for config: {config.get('name')} (missing 'updated_at')")
+        raise ValueError(f"Validation failed for config: {config.get('name')}")
+
 @flow(name="validate customer configuration")
 def validate_customer_configurations():
     """
@@ -44,41 +83,7 @@ def validate_customer_configurations():
 
     # Validate each customer configuration using GE Validator and PandasExecutionEngine
     for config in customer_configs:
-        df = pd.DataFrame([config])
-
-        # Validate 'name' column exists and is not null
-        if "name" not in df.columns:
-            logger.error(f"Validation failed for config: {config.get('name')} (missing 'name')")
-            raise ValueError(f"Validation failed for config: {config.get('name')}")
-        if df["name"].isnull().any():
-            logger.error(f"Validation failed for config: {config.get('name')} (null 'name')")
-            raise ValueError(f"Validation failed for config: {config.get('name')}")
-
-        # Validate 'email' column exists and matches regex
-        if "version" not in df.columns:
-            logger.error(f"Validation failed for config: {config.get('name')} (missing 'version')")
-            raise ValueError(f"Validation failed for config: {config.get('name')}")
-        
-        if df["version"].isnull().any():
-            logger.error(f"Validation failed for config: {config.get('name')} (missing 'version')")
-            raise ValueError(f"Validation failed for config: {config.get('name')}")
-        
-        if "created_at" not in df.columns:
-            logger.error(f"Validation failed for config: {config.get('name')} (missing 'created_at')")
-            raise ValueError(f"Validation failed for config: {config.get('name')}")
-
-        if df["created_at"].isnull().any():
-            logger.error(f"Validation failed for config: {config.get('name')} (missing 'created_at')")
-            raise ValueError(f"Validation failed for config: {config.get('name')}")
-
-        if "updated_at" not in df.columns:
-            logger.error(f"Validation failed for config: {config.get('name')} (missing 'updated_at')")
-            raise ValueError(f"Validation failed for config: {config.get('name')}")
-
-        if df["updated_at"].isnull().any():
-            logger.error(f"Validation failed for config: {config.get('name')} (missing 'updated_at')")
-            raise ValueError(f"Validation failed for config: {config.get('name')}")
-
+        validate_configuration(config)
 
     logger.info("Customer configuration validation completed.")
 
